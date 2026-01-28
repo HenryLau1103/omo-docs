@@ -31,6 +31,7 @@ export default defineConfig({
       { text: 'PRD', link: '/prd/' },
       { text: 'API', link: '/api/' },
       { text: 'Plans', link: '/plans/' },
+      { text: 'Tasks', link: '/tasks/' },
       { text: 'Changelog', link: '/changelog/' },
     ],
     sidebar: {
@@ -62,6 +63,12 @@ export default defineConfig({
         {
           text: 'Changelog',
           items: getSidebarItems('changelog')
+        }
+      ],
+      '/tasks/': [
+        {
+          text: 'Tasks',
+          items: getSidebarItems('tasks')
         }
       ]
     }

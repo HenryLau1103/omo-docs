@@ -12,7 +12,8 @@ const dirToSchema = {
   'prd': 'prd',
   'api': 'api',
   'changelog': 'changelog',
-  'plans': 'plan'
+  'plans': 'plan',
+  'tasks': 'task'
 };
 
 let hasErrors = false;
