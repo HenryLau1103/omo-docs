@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "google_auth": false,
+  "ui": {
+    "sidebar": {
+      "visible": true,
+      "todoPanel": {
+        "enabled": true,
+        "position": "right"
+      }
+    }
+  },
+  "agents": {
+    "sisyphus": {
+      "model": "your-provider/your-model",
+      "prompt_append": "重要：你必須使用繁體中文回覆所有訊息。若產生/修改docs內Markdown，請遵守Docs-as-Code：輸出單一檔案內容＋YAML frontmatter，欄位需符合對應schema（docs/.schemas/*.schema.json）與模板；缺資訊先提問，不要臆測。並在第一行提供Path: docs/{specs|prd|api|changelog|plans}/<slug>.md。"
+    },
+    "librarian": {
+      "model": "your-provider/your-model"
+    },
+    "explore": {
+      "model": "your-provider/your-model"
+    },
+    "oracle": {
+      "model": "your-provider/your-model"
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "your-provider/your-model"
+    },
+    "document-writer": {
+      "model": "your-provider/your-model",
+      "prompt_append": "輸出文件時遵守Docs-as-Code：回覆為單一Markdown檔內容。最上方必含YAML frontmatter，且需符合對應schema（docs/.schemas/*.schema.json）與templates；缺資訊先提問，不要臆測。並在第一行提供建議存放路徑：Path: docs/{specs|prd|api|changelog|plans}/<slug>.md。查閱docs/.schemas/中對應的schema以確認必填欄位。"
+    },
+    "multimodal-looker": {
+      "model": "your-provider/your-model"
+    }
+  }
+}
