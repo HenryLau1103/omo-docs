@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Specification Schema",
+  "type": "object",
+  "required": [
+    "title",
+    "date",
+    "author",
+    "status",
+    "version",
+    "tags"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready",
+        "in-progress",
+        "done",
+        "cancelled"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "target_project": {
+      "type": "string",
+      "description": "目標專案名稱"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "minimum": 0,
+      "description": "預估工時（小時）"
+    },
+    "related_docs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "相關文件連結"
+    }
+  },
+  "additionalProperties": false
+}
