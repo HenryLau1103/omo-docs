@@ -1,0 +1,90 @@
+name: Docs Validation & Deploy
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+      - 'scripts/validate-frontmatter.mjs'
+      - '.vale.ini'
+      - '.vale/**'
+      - '.lychee.toml'
+      - '.markdownlint.jsonc'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+      - 'scripts/validate-frontmatter.mjs'
+      - '.vale.ini'
+      - '.vale/**'
+      - '.lychee.toml'
+      - '.markdownlint.jsonc'
+      - 'pnpm-lock.yaml'
+      - 'package.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      
+      - name: Validate Frontmatter
+        run: node scripts/validate-frontmatter.mjs
+        continue-on-error: true
+        
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          config: '.markdownlint.jsonc'
+          globs: 'docs/**/*.md'
+        continue-on-error: true
+        
+      - name: Check Links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config .lychee.toml docs/**/*.md
+        continue-on-error: true
+        
+      - name: Vale Style Check
+        uses: errata-ai/vale-action@v2
+        with:
+          files: docs
+          vale_flags: "--config=.vale.ini"
+        continue-on-error: true
+
+  deploy:
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read    # checkout 需要讀取 repo 內容
+      pages: write      # 部署到 Pages
+      id-token: write   # OIDC 認證
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm docs:build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+      - uses: actions/deploy-pages@v4
+        id: deployment
