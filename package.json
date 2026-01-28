@@ -1,0 +1,19 @@
+{
+  "name": "omo-docs",
+  "version": "0.0.1",
+  "description": "omo-docs: Documentation repository (用於 VitePress base 設定)",
+  "type": "module",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "keywords": [
+    "vitepress",
+    "documentation",
+    "omo"
+  ],
+  "author": "",
+  "license": "MIT"
+}
